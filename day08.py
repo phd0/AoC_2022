@@ -1,7 +1,7 @@
 import sys
 from collections import defaultdict
 
-infile = sys.argv[1] if len(sys.argv) > 1 else 'day08a.txt'
+infile = sys.argv[1] if len(sys.argv) > 1 else 'day08.txt'
 data = open(infile).read().strip()
 linesH = [x for x in data.split('\n')]
 linesV = []
@@ -29,14 +29,19 @@ printresults()
 for cc in range(0, len(linesH)-1):
     max = -1
     for h in range(0, len(linesH[0])-1):
-        if (linesH[cc][h] in numbers and int(linesH[cc][h]) > max):
+        if (linesV[cc][h] not in numbers):
+            break
+        if (int(linesH[cc][h]) > max):
             result += 1
             max = int(linesH[cc][h])
             linesH[cc] = linesH[cc][:h] + '>' + linesH[cc][h+1:]
             linesV[h] = linesV[h][:cc] + '>' + linesV[h][cc+1:]
+for cc in range(len(linesH)-1, 1, -1):
     max = -1
     for h in range(len(linesH[0])-1, 0, -1):
-        if (linesH[cc][h] in numbers and int(linesH[cc][h]) > max):
+        if (linesV[cc][h] not in numbers):
+            break
+        if (int(linesH[cc][h]) > max):
             result += 1
             max = int(linesH[cc][h])
             linesH[cc] = linesH[cc][:h] + '<' + linesH[cc][h+1:]
@@ -47,17 +52,22 @@ printresults()
 for cc in range(0, len(linesV)-1):
     max = -1
     for v in range(0, len(linesV[0])-1):
-        if (linesV[cc][v] in numbers and int(linesV[cc][v]) > max):
+        if (linesV[cc][v] not in numbers):
+            break
+        if (int(linesV[cc][v]) > max):
             result += 1
             max = int(linesV[cc][v])
             linesV[cc] = linesV[cc][:v] + 'v' + linesV[cc][v+1:]
-            linesV[v] = linesV[v][:cc] + 'v' + linesV[v][cc+1:]
+            linesH[v] = linesH[v][:cc] + 'v' + linesH[v][cc+1:]
+for cc in range(len(linesV)-1, 0, -1):
     max = -1
     for v in range(len(linesV[0])-1, 0, -1):
-        if (linesV[cc][v] in numbers and int(linesV[cc][v]) > max):
+        if (linesV[cc][v] not in numbers):
+            break
+        if (int(linesV[cc][v]) > max):
             result += 1
             max = int(linesV[cc][v])
             linesV[cc] = linesV[cc][:v] + '^' + linesV[cc][v+1:]
-            linesV[v] = linesV[v][:cc] + '^' + linesV[v][cc+1:]
+            linesH[v] = linesH[v][:cc] + '^' + linesH[v][cc+1:]
 printresults()
 print('1:', result)
