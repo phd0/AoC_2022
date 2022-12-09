@@ -26,7 +26,7 @@ def T(dir, n):
         posT[0] = posH[0]
         posT[1] = posH[1]+1
     if (posT not in memory):
-            memory.append([posT])
+            memory.append(posT)
 
 def move(dir, n):
     global posH, posT, memory
@@ -40,7 +40,7 @@ def move(dir, n):
         moveH = [0, -n]
     else:
         moveH = [0, 0]
-    # for n in range(1, int(number)+1):
+
     posH[0] += moveH[0]
     posH[1] += moveH[1]
     print(abs(posH[0]-posT[0]), abs(posH[1]-posT[1]), end=' ')
@@ -48,14 +48,17 @@ def move(dir, n):
         for nn in range(1, n):
             T(dir, 1)
     else:
+        # the Tail don't move
         pass
+    # show line like : 
+    # RxRy    moveH    Head  Tail 
+    # 1 0 R2,[2, 0]   [2, 2][1, 2]
     print(dir, n, ',', moveH, '\t', posH, posT, sep='')
-    #posT = posH
     pass
 
-part1 = 0
-memory.append([posT])
-for dir, num in moves:
-    move(dir, int(num))
+memory.append(posT)
+print('RxRy    moveH    Head  Tail')
+for dir, step in moves:
+    move(dir, int(step))
 
 print('1:', len(memory))
